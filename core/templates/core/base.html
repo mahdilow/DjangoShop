@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
+  {%load static%}
+    <link rel="shortcut icon" type="image/x-icon" href="{%static 'core/favicon.ico'%}" />
+    <title>{% block title %}{% endblock %} | PC Shop</title>
+  </head>
+
+  <body class="bg-blue-50 flex flex-col h-screen">
+    <!--navbar-->
+    {% include 'core/navbar.html' %}
+
+    <!-- Main Content-->
+    <main class="mb-auto">{% block content %} {% endblock %}</main>
+
+    <script src="https://unpkg.com/htmx.org@1.7.0"></script>
+    {% block scripts %} {% endblock %}
+
+
+    <!--footer-->
+     {%include 'core/footer.html'%}
+  </body>
+</html>

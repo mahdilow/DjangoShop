@@ -1,0 +1,87 @@
+{% if item %}
+<div class="product mb-6 flex pr-6" id="cart-item-{{ item.product.id }}">
+  <a href="{%url 'product' item.product.slug %}" class="w-1/4">
+    <img
+      class="hover:shadow-lg rounded-xl"
+      src="{{ item.product.get_thumbnail }}"
+    />
+  </a>
+
+  <div class="w-3/4 pl-6">
+    <div class="flex justify-between">
+      <a href="{%url 'product' item.product.slug %}" class="text-lg"
+        >{{ item.product.name }}</a
+      >
+
+      <span class="mb-6 pt-1 text-gray-400">تومان{{ item.total_price }}</span>
+    </div>
+
+    <hr />
+
+    <div class="quantity mt-6 flex items-center space-x-4">
+      <div class="quantity mt-6 flex items-center space-x-4">
+        <div class="w-auto h-auto">
+          <div class="flex-1 h-full">
+            <div
+              class="flex items-center justify-center flex-1 h-full p-2 bg-red-500 text-white shadow rounded-full hover:bg-red-800 hover:cursor-pointer"
+            >
+              <a
+                hx-get="{% url 'update_cart' item.product.id 'decrement' %}"
+                hx-target="#cart-item-{{ item.product.id }}"
+                hx-swap="outerHTML"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-6 h-6"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M18 12H6"
+                  />
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <span>{{ item.quantity }}</span>
+
+        <!--increment button-->
+        <div class="w-auto h-auto">
+          <div class="flex-1 h-full">
+            <div
+              class="flex items-center justify-center flex-1 h-full p-2 bg-green-500 text-white shadow rounded-full hover:bg-green-800 hover:cursor-pointer"
+            >
+              <a
+                hx-get="{% url 'update_cart' item.product.id 'increment' %}"
+                hx-target="#cart-item-{{ item.product.id }}"
+                hx-swap="outerHTML"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="h-6 w-6"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+                  />
+                </svg>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endif %}
+</div>
