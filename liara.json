@@ -1,3 +1,15 @@
 {
-    "app":"pcshop"
+    "app":"pcshop",
+    "disks":[
+        {
+            "name":"disk1",
+            "mountTo":"data"
+        },
+        {
+            "name":"data",
+            "mountTo":"media/uploads"
+
+
+        }
+    ]
 }
