@@ -1,26 +1,41 @@
 <!DOCTYPE html>
-<html>
+<html lang="fa" dir="rtl">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Tailwind CDN with RTL support -->
     <script src="https://cdn.tailwindcss.com"></script>
-  {%load static%}
-    <link rel="shortcut icon" type="image/x-icon" href="{%static 'core/favicon.ico'%}" />
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            // Add any theme extensions here
+          },
+        },
+        corePlugins: {
+          preflight: false,  // Disable if necessary to avoid conflicts
+        },
+        plugins: [tailwindcssRTL()],
+      }
+    </script>
+
+    {% load static %}
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'core/favicon.ico' %}" />
     <title>{% block title %}{% endblock %} | PC Shop</title>
   </head>
 
   <body class="bg-blue-50 flex flex-col h-screen">
-    <!--navbar-->
+    <!-- Navbar -->
     {% include 'core/navbar.html' %}
 
-    <!-- Main Content-->
+    <!-- Main Content -->
     <main class="mb-auto">{% block content %} {% endblock %}</main>
 
     <script src="https://unpkg.com/htmx.org@1.7.0"></script>
     {% block scripts %} {% endblock %}
 
-
-    <!--footer-->
-     {%include 'core/footer.html'%}
+    <!-- Footer -->
+    {% include 'core/footer.html' %}
   </body>
 </html>

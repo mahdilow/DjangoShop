@@ -108,7 +108,7 @@ DATABASES = {
 }
 
 # override env database (postgresql)
-DATABASES['default'] = dj_database_url.parse(os.getenv('DB_URL'))
+# DATABASES['default'] = dj_database_url.parse(os.getenv('DB_URL'))
 
 # for lira data/
 
@@ -150,7 +150,7 @@ STATIC_ROOT = BASE_DIR / "staticfiles"
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+# STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
