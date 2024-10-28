@@ -1,218 +1,105 @@
 {% extends 'core/base.html' %}
-{% block title %}Welcome{% endblock %}
+
+{% block title %}Home{% endblock %}
+
 {% block content %}
 {% load static %}
 
-<!-- Header -->
-<header
-  class="px-6 py-10 lg:py-20 bg-cover bg-center bg-[url('{% static 'core/header-bg.jpg' %}')]"
-  dir="rtl"
->
-  <div class="max-w-3xl h-64 mt-24 mx-auto text-center flex-col justify-center items-center">
-    <p class="mb-6 text-4xl lg:text-6xl text-white">به فروشگاه کامپیوتر خوش آمدید</p>
-    <p class="mb-16 lg:text-2xl text-white">همین حالا شروع به بازی کنید!</p>
-    <a
-      href="{% url 'shop' %}"
-      class="justify-center rounded-xl border-2 border-info px-14 py-8 mt-32 text-xs font-medium uppercase leading-normal text-white transition hover:border-info-600 hover:bg-neutral-500 hover:bg-opacity-10 hover:text-info-600 focus:border-info-600 focus:text-info-600 focus:outline-none focus:ring-0 dark:hover:bg-neutral-100 dark:hover:bg-opacity-10"
-      >شروع خرید</a
-    >
-  </div>
-</header>
-<!-- Header END -->
-
-<div class="my-8 flex justify-center">
-  <div class="container px-6">
-    <div
-      class="h-80 bg-center duration-300 ease-in-out hover:scale-95"
-      style="
-        background-image: url('https://www.geekawhat.com/wp-content/uploads/2022/05/Best-GPU-Featured-Image.jpg');
-      "
-    >
-      <div class="bg-gray-900 bg-opacity-50 flex items-center h-full rounded-md">
-        <div class="px-10 max-w-xl">
-          <h2 class="text-2xl text-white font-semibold">کارت گرافیک</h2>
-          <p class="mt-2 text-gray-400">GPU های عالی موجود است</p>
-          <button
-            onclick="location.href='{% url 'shop' %}'" type="button"
-            class="flex items-center mt-4 px-3 py-2 bg-blue-600 text-white text-sm uppercase font-medium rounded hover:bg-blue-500 focus:outline-none focus:bg-blue-500"
-          >
-            <span>خرید کنید</span>
-            <svg
-              class="h-5 w-5 mx-2"
-              fill="none"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-            </svg>
-          </button>
-        </div>
-      </div>
+<!-- Hero Section -->
+<section class="hero bg-gray-800 py-20">
+  <div class="container mx-auto px-6 flex flex-col lg:flex-row-reverse items-center">
+    <!-- Left Image Section -->
+    <div class="lg:w-1/2 mb-8 lg:mb-0 flex justify-center lg:justify-start">
+      <img src="{% static 'core/hero-image.jpg' %}" alt="Custom Sneakers" class="w-full max-w-2xl rounded-lg shadow-2xl object-cover" />
     </div>
-    <div class="md:flex mt-8 md:-mx-4">
-      <div
-        class="w-full h-64 md:mx-4 rounded-md overflow-hidden bg-cover bg-center md:w-1/2 transition duration-300 ease-in-out hover:scale-95"
-        style="
-          background-image: url('https://geekawhat.com/wp-content/uploads/2022/05/What-is-a-CPU-ft-Image.jpg');
-        "
-      >
-        <div class="bg-gray-900 bg-opacity-50 flex items-center h-full">
-          <div class="px-10 max-w-xl">
-            <h2 class="text-2xl text-white font-semibold">CPU</h2>
-            <p class="mt-2 text-gray-400">بهترین CPU ها را برای کار خود پیدا کنید</p>
-            <button
-              onclick="location.href='{% url 'shop' %}'" type="button"
-              class="flex items-center mt-4 text-white text-sm uppercase font-medium rounded focus:outline-none"
-            >
-              <span>خرید کنید</span>
-              <svg
-                class="h-5 w-5 mx-2"
-                fill="none"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-              </svg>
-            </button>
+
+    <!-- Right Text Section -->
+    <div class="lg:w-1/2 text-center lg:text-right">
+      <h1 class="text-5xl font-bold text-blue-400 mb-6">خوش آمدید به فروشگاه سفارشی PC Shop</h1>
+      <p class="text-xl text-gray-300 mb-10">با بهترین مجموعه‌ها و محصولات سفارشی برای شما</p>
+      <a href="{% url 'shop' %}" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold px-8 py-4 rounded-lg transition duration-300 ease-in-out">مشاهده محصولات</a>
+    </div>
+  </div>
+</section>
+
+<!-- Categories Slider -->
+<!-- Updated Categories Section with Improved Spacing and Styled Scrollbar -->
+<section class="categories py-12 bg-gray-900">
+  <div class="container mx-auto px-6">
+    <h2 class="text-3xl text-blue-300 font-semibold mb-6 text-center">دسته‌بندی‌ها</h2>
+    
+    <!-- Horizontal Scrollable Section with custom scrollbar styling -->
+    <div class="flex space-x-4 overflow-x-auto scrollbar-hide px-4" onmouseenter="this.classList.remove('scrollbar-hide')" onmouseleave="this.classList.add('scrollbar-hide')">
+      {% for category in categories %}
+        <a 
+          href="{% url 'shop' %}?category={{ category.slug }}" 
+          class="block min-w-[12rem] max-w-[16rem] h-56 bg-cover bg-center rounded-lg shadow-lg transform hover:scale-105 transition-transform duration-300 ease-out"
+          style="background-image: url('{{ category.get_thumbnail }}'); margin-right: 1rem;">
+          <div class="text-white bg-black bg-opacity-60 p-2 rounded-b-lg text-center font-bold transition-transform delay-150">
+            {{ category.name }}
           </div>
-        </div>
-      </div>
-      <div
-        class="w-full h-64 mt-8 md:mx-4 rounded-md overflow-hidden bg-cover bg-center md:mt-0 md:w-1/2 transition duration-300 ease-in-out hover:scale-95"
-        style="
-          background-image: url('https://s8.uupload.ir/files/cheap-gaming-laptop-2048px-9124-2x1-1_kv8r.jpg');
-        "
-      >
-        <div class="bg-gray-900 bg-opacity-50 flex items-center h-full ">
-          <div class="px-10 max-w-xl">
-            <h2 class="text-2xl text-white font-semibold">لپ‌تاپ</h2>
-            <p class="mt-2 text-gray-400">خرید از برندهای معتبر</p>
-            <button
-              onclick="location.href='{% url 'shop' %}'" type="button"
-              class="flex items-center mt-4 text-white text-sm uppercase font-medium rounded focus:outline-none"
-            >
-              <span>خرید کنید</span>
-              <svg
-                class="h-5 w-5 mx-2"
-                fill="none"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
-              </svg>
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="px-6 py-10 lg:py-20 bg-cover bg-center bg-blue-50" dir="rtl">
-  <!-- Sliders -->
-  <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.1.min.js"></script>
-  <script>
-    var cont = 0;
-    function loopSlider() {
-      var xx = setInterval(function () {
-        switch (cont) {
-          case 0: {
-            $("#slider-1").fadeOut(400);
-            $("#slider-2").delay(400).fadeIn(400);
-            $("#sButton1").removeClass("bg-purple-800");
-            $("#sButton2").addClass("bg-purple-800");
-            cont = 1;
-            break;
-          }
-          case 1: {
-            $("#slider-2").fadeOut(400);
-            $("#slider-1").delay(400).fadeIn(400);
-            $("#sButton2").removeClass("bg-purple-800");
-            $("#sButton1").addClass("bg-purple-800");
-            cont = 0;
-            break;
-          }
-        }
-      }, 8000);
-    }
-
-    function reinitLoop(time) {
-      clearInterval(xx);
-      setTimeout(loopSlider(), time);
-    }
-
-    function sliderButton1() {
-      $("#slider-2").fadeOut(400);
-      $("#slider-1").delay(400).fadeIn(400);
-      $("#sButton2").removeClass("bg-blue-800");
-      $("#sButton1").addClass("bg-blue-800");
-      reinitLoop(4000);
-      cont = 0;
-    }
-
-    function sliderButton2() {
-      $("#slider-1").fadeOut(400);
-      $("#slider-2").delay(400).fadeIn(400);
-      $("#sButton1").removeClass("bg-blue-800");
-      $("#sButton2").addClass("bg-blue-800");
-      reinitLoop(4000);
-      cont = 1;
-    }
-
-    $(window).ready(function () {
-      $("#slider-2").hide();
-      $("#sButton1").addClass("bg-blue-800");
-      loopSlider();
-    });
-  </script>
-
-  <div class="sliderAx h-auto">
-    <div id="slider-1" class="container mx-auto">
-      <div class="bg-cover bg-center h-auto text-white py-24 px-10 object-fill" style="background-image: url(https://s8.uupload.ir/files/wp6967920-ps5-poster-hd-wallpapers_5b5s.jpg)">
-        <div class="md:w-1/2">
-          <p class="font-bold text-sm uppercase">PS5</p>
-          <p class="text-3xl font-bold">موجود است</p>
-          <p class="text-2xl mb-10 leading-none">تجربه بازی‌های نسل جدید</p>
-          <a href="{% url 'shop' %}" class="bg-blue-800 py-4 px-8 text-white font-bold uppercase text-xs rounded hover:bg-gray-200 hover:text-gray-800">خرید</a>
-        </div>
-      </div>
-      <br>
-    </div>
-
-    <div id="slider-2" class="container mx-auto">
-      <div class="bg-cover bg-top flex-row-reverse h-auto text-white py-24 px-10 object-fill" style="background-image: url(https://s8.uupload.ir/files/8b84248f-670a-42ea-9016-059f01d81e8e_6nau.jpg)">
-        <p class="text-3xl font-bold mb-4 ">ROG</p>
-        <p class="font-bold text-sm uppercase">بهترین ها</p>
-        <p class="text-2xl mb-10 leading-none">در گیمینگ</p>
-        <a href="{% url 'shop' %}" class="bg-blue-800 py-4 px-8 text-white font-bold uppercase text-xs rounded hover:bg-gray-200 hover:text-gray-800">خرید</a>
-      </div>
-      <br>
-    </div>
-  </div>
-
-  <div class="flex justify-between w-12 mx-auto pb-2">
-    <button id="sButton1" onclick="sliderButton1()" class="bg-purple-400 rounded-full w-4 pb-2 " ></button>
-    <button id="sButton2" onclick="sliderButton2()" class="bg-purple-400 rounded-full w-4 p-2"></button>
-  </div>
-
-  <!-- Latest Products -->
-  <div class="max-w-6xl mx-auto py-2 px-6 xl:px-0">
-    <p class="font-bold text-blue-950">محصولات جدید</p>
-    <hr/>
-    <div class="products flex items-center flex-wrap">
-      {% for product in products %}
-        {% include 'product/partials/product_list_item.html' %}
+        </a>
       {% endfor %}
     </div>
   </div>
-</div>
+</section>
+
+<!-- Custom Styles for Scrollbar -->
+<style>
+  /* Hides scrollbar by default, visible on hover */
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  /* Styled scrollbar when container is hovered */
+  .categories .flex::-webkit-scrollbar {
+    height: 8px;
+  }
+  .categories .flex::-webkit-scrollbar-thumb {
+    background-color: #4a5568;
+    border-radius: 10px;
+  }
+  .categories .flex::-webkit-scrollbar-track {
+    background: transparent;
+  }
+</style>
+
+
+<!-- Latest Products -->
+<section class="latest-products py-12 bg-gray-800">
+  <div class="container mx-auto px-6">
+    <h2 class="text-3xl text-blue-300 font-semibold mb-6 text-center">آخرین محصولات</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
+      {% for product in latest_products %}
+        <div class="card bg-gray-900 shadow-xl text-center">
+          <figure>
+            <img src="{{ product.get_thumbnail }}" alt="{{ product.name }}" class="rounded-t-lg"/>
+          </figure>
+          <div class="card-body text-white">
+            <h3 class="card-title font-bold text-lg">{{ product.name }}</h3>
+            <p class="text-green-400">تومان{{ product.price }}</p>
+            <a href="{% url 'product' product.slug %}" class="btn btn-primary w-full mt-4">مشاهده جزئیات</a>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+<!-- category section scroll horizontally with mouse wheel-->
+<script>
+  const categoriesSection = document.querySelector('.overflow-x-auto');
+
+  categoriesSection.addEventListener('wheel', (e) => {
+    e.preventDefault(); // Prevent default vertical scroll
+    // Use a multiplier to control scroll speed
+    const scrollAmount = e.deltaY * 3; // Adjust the multiplier for sensitivity
+    categoriesSection.scrollLeft += scrollAmount; // Scroll horizontally
+    categoriesSection.style.scrollBehavior = 'smooth'; // Enable smooth scrolling
+  });
+</script>
+
 {% endblock %}

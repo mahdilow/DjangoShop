@@ -4,14 +4,19 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.shortcuts import render, redirect
 
+from algoliasearch_django import raw_search
+from algoliasearch_django.decorators import register
+
+
 from product.models import Product, Category
 
 from .forms import SignUpForm
 
 def HomePage(request):
-    products = Product.objects.all()[0:8]
+    products = Product.objects.all()[:8]  # Fetch the first 8 products
+    categories = Category.objects.all()  # Fetch all categories
 
-    return render(request, 'core/HomePage.html', {'products': products})
+    return render(request, 'core/HomePage.html', {'products': products, 'categories': categories})
 
 def signup(request):
     if request.method == 'POST':
@@ -67,18 +72,38 @@ def shop(request):
 
     return render(request, 'core/shop.html', context)
 
-
+#SAEARCH WITH ALGOLIA
 def search(request):
-    products = Product.objects.all()
-    
-    query = request.GET.get('query', '')
+    query = request.GET.get('query', '')  # Get the search query from the URL parameters
+    products = []
 
     if query:
-        products = products.filter(Q(name__icontains=query) | Q(description__icontains=query))
-        
+        # Use Algolia to search products
+        algolia_results = raw_search(Product, query)  # Perform search using Algolia
+        # Collect only the objectIDs from Algolia results
+        product_ids = [hit['objectID'] for hit in algolia_results['hits']]
+        # Fetch matching products from the database
+        products = Product.objects.filter(id__in=product_ids)
+
     context = {      
         'products': products     
     }
 
+    return render(request, 'core/shop.html', context)
 
-    return render(request, 'core/shop.html',context)
+
+#WITHOUT ALGOLIA (NORMAL SEARCH)
+# def search(request):
+#     products = Product.objects.all()
+    
+#     query = request.GET.get('query', '')
+
+#     if query:
+#         products = products.filter(Q(name__icontains=query) | Q(description__icontains=query))
+        
+#     context = {      
+#         'products': products     
+#     }
+
+
+#     return render(request, 'core/shop.html',context)

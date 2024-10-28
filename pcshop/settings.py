@@ -52,15 +52,19 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'cart',
     'core',
-    'product',
     'order',
-    
-  
+    'product.apps.ProductConfig',  # Use the full path to `ProductConfig`
+    'algoliasearch_django',
+ 
+
     
     'django_browser_reload',
 ]
 
-
+ALGOLIA = {
+  'APPLICATION_ID': os.getenv('ALGO_APPLICATION_ID'),
+  'API_KEY': os.getenv('ALGOLIA_KEY')
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
