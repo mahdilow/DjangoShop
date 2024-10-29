@@ -68,27 +68,20 @@
   }
 </style>
 
-
 <!-- Latest Products -->
 <section class="latest-products py-12 bg-gray-800">
   <div class="container mx-auto px-6">
     <h2 class="text-3xl text-blue-300 font-semibold mb-6 text-center">آخرین محصولات</h2>
     <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
-      {% for product in latest_products %}
-        <div class="card bg-gray-900 shadow-xl text-center">
-          <figure>
-            <img src="{{ product.get_thumbnail }}" alt="{{ product.name }}" class="rounded-t-lg"/>
-          </figure>
-          <div class="card-body text-white">
-            <h3 class="card-title font-bold text-lg">{{ product.name }}</h3>
-            <p class="text-green-400">تومان{{ product.price }}</p>
-            <a href="{% url 'product' product.slug %}" class="btn btn-primary w-full mt-4">مشاهده جزئیات</a>
-          </div>
-        </div>
+      {% for product in products %}
+        {% include 'product/partials/product_list_item.html' %}
       {% endfor %}
     </div>
   </div>
 </section>
+
+
+
 <!-- category section scroll horizontally with mouse wheel-->
 <script>
   const categoriesSection = document.querySelector('.overflow-x-auto');
