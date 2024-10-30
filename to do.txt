@@ -1,9 +1,10 @@
 category picture - done
 product not showing -  done
-
+footer - done
+product detail design - done 
+http://127.0.0.1:8000/myaccount/   bayad center shavad
 signal
 site name 
-product detail design
 data basehost 
-footer 
+
 when product added show this alert https://daisyui.com/components/alert/  *success    https://merakiui.com/components/application-ui/alerts

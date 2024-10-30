@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    
+
     <!-- Persian Font Link -->
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@latest/dist/font-face.css" rel="stylesheet" type="text/css" />
 
@@ -17,17 +17,17 @@
               sans: ['Vazir', 'ui-sans-serif', 'system-ui'],
             },
           },
-          daisyui: {
-            themes: ["dark"],
-          },
         },
-        plugins: [tailwindcssRTL()],
+        plugins: [require('daisyui'), tailwindcssRTL()],
+        daisyui: {
+          themes: ["dark"],
+        },
       }
     </script>
 
     {% load static %}
     <link rel="shortcut icon" type="image/x-icon" href="{% static 'core/favicon.ico' %}" />
-    <title>{% block title %}{% endblock %} | PC Shop</title>
+    <title>{% block title %}{% endblock %} | PyroStyle</title>
   </head>
 
   <body class="bg-neutral flex flex-col h-screen text-white font-sans">
@@ -44,4 +44,3 @@
     {% include 'core/footer.html' %}
   </body>
 </html>
-
