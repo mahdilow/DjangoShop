@@ -2,9 +2,16 @@ category picture - done
 product not showing -  done
 footer - done
 product detail design - done 
-http://127.0.0.1:8000/myaccount/   bayad center shavad
+site name - done 
+http://127.0.0.1:8000/myaccount/   bayad center shavad - done
 signal
-site name 
+email - sms - to user
+add cancell status to orders
 data basehost 
-
+order hay jadid dar admin neshan dade shavad
 when product added show this alert https://daisyui.com/components/alert/  *success    https://merakiui.com/components/application-ui/alerts
+
+
+checkout 
+login - signup
+change the admin panel 

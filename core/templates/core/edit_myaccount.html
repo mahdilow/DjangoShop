@@ -7,27 +7,27 @@
     <div class="w-full max-w-6xl p-6 lg:p-10">
         <h1 class="mb-6 text-3xl text-blue-400 font-bold">ویرایش حساب کاربری</h1>
 
-        <form method="post" action="." class="space-y-4 bg-blue-900 p-6 rounded-xl shadow-lg">
+        <form method="post" action="." class="space-y-4 bg-gray-900 p-6 rounded-xl shadow-lg">
             {% csrf_token %}
 
             <div>
                 <label class="text-gray-300">نام:</label>
-                <input name="first_name" value="{{ request.user.first_name }}" type="text" class="w-full rounded-lg border-gray-700 bg-gray-900 p-4 text-lg text-white shadow-sm focus:ring focus:ring-blue-500 transition" placeholder="نام خود را وارد کنید">
+                <input name="first_name" value="{{ request.user.first_name }}" type="text" class="w-full rounded-lg border-gray-700 bg-gray-800 p-4 text-lg text-white shadow-sm focus:ring focus:ring-blue-500 transition" placeholder="نام خود را وارد کنید">
             </div>
 
             <div>
                 <label class="text-gray-300">نام خانوادگی:</label>
-                <input name="last_name" value="{{ request.user.last_name }}" type="text" class="w-full rounded-lg border-gray-700 bg-gray-900 p-4 text-lg text-white shadow-sm focus:ring focus:ring-blue-500 transition" placeholder="نام خانوادگی خود را وارد کنید">
+                <input name="last_name" value="{{ request.user.last_name }}" type="text" class="w-full rounded-lg border-gray-700 bg-gray-800 p-4 text-lg text-white shadow-sm focus:ring focus:ring-blue-500 transition" placeholder="نام خانوادگی خود را وارد کنید">
             </div>
 
             <div>
                 <label class="text-gray-300">نام کاربری:</label>
-                <input name="username" value="{{ request.user.username }}" type="text" class="w-full rounded-lg border-gray-700 bg-gray-900 p-4 text-lg text-white shadow-sm focus:ring focus:ring-blue-500 transition" placeholder="نام کاربری خود را وارد کنید">
+                <input name="username" value="{{ request.user.username }}" type="text" class="w-full rounded-lg border-gray-700 bg-gray-800 p-4 text-lg text-white shadow-sm focus:ring focus:ring-blue-500 transition" placeholder="نام کاربری خود را وارد کنید">
             </div>
 
             <div>
                 <label class="text-gray-300">ایمیل:</label>
-                <input name="email" value="{{ request.user.email }}" type="email" class="w-full rounded-lg border-gray-700 bg-gray-900 p-4 text-lg text-white shadow-sm focus:ring focus:ring-blue-500 transition" placeholder="ایمیل خود را وارد کنید">
+                <input name="email" value="{{ request.user.email }}" type="email" class="w-full rounded-lg border-gray-700 bg-gray-800 p-4 text-lg text-white shadow-sm focus:ring focus:ring-blue-500 transition" placeholder="ایمیل خود را وارد کنید">
             </div>
 
             <div class="text-center">
