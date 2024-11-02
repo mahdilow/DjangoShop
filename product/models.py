@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.core.files import File
 from io import BytesIO
 from PIL import Image
+from django_jalali.db import models as jmodels
 
 class Category(models.Model):
     name = models.CharField(max_length=255)
@@ -29,7 +30,7 @@ class Product(models.Model):
     slug = models.SlugField()
     description = models.TextField(blank=True, null=True)
     price = models.DecimalField(max_digits=10, decimal_places=0)
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = jmodels.jDateField(auto_now_add=True)
     image = models.ImageField(upload_to='uploads/', blank=True, null=True)
     thumbnail = models.ImageField(upload_to='uploads/', blank=True, null=True)
 
@@ -71,4 +72,4 @@ class Review(models.Model):
     rating = models.IntegerField(default=3)
     content = models.TextField()
     created_by = models.ForeignKey(User, related_name='reviews', on_delete=models.CASCADE)
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = jmodels.jDateTimeField(auto_now_add=True)

@@ -34,7 +34,7 @@
                                 <a href="{% url 'product' item.product.slug %}" class="text-lg text-gray-300">{{ item.product.name }}</a>
                                 <div class="text-gray-400">تعداد: x{{ item.quantity }}</div>
                             </div>
-                            <p class="text-gray-500">قیمت: {{ item.get_total_price }} تومان</p>
+                            <p class="text-gray-500">قیمت: {{ item.get_total_price|intcomma }} تومان</p>
                             <hr class="my-4 border-gray-600">
                         </div>
                     </div>

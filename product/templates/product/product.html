@@ -3,6 +3,7 @@
 {% block title %}{{ product.name }}{% endblock %}
 
 {% block content %}
+{% load humanize %}
 <div class="min-h-screen flex justify-center items-center bg-gray-800">
     <div class="max-w-6xl w-full flex flex-wrap py-8 px-6 lg:px-0">
         
@@ -20,7 +21,7 @@
         <!-- Product Information Section -->
         <div class="w-full lg:w-2/5 lg:p-6">
             <h1 class="text-3xl font-bold text-blue-400 mb-2">{{ product.name }}</h1>
-            <p class="text-xl font-semibold text-green-500 mb-4">تومان{{ product.price_display }}</p>
+            <p class="text-xl font-semibold text-green-500 mb-4">تومان{{ product.price_display|intcomma }}</p>
 
             {% if product.get_rating > 0 %}
                 <p class="text-gray-400 mb-2">امتیاز: {{ product.get_rating }} / 10</p>
@@ -85,7 +86,7 @@
                 <div class="px-6 py-4 bg-gray-900 rounded-xl mb-4 text-gray-50">
                     <p class="mb-1"><strong>توسط:</strong> {{ review.created_by }}</p>
                     <p class="mb-1"><strong>امتیاز:</strong> {{ review.rating }}/10</p>
-                    <p class="mb-1"><strong>تاریخ:</strong> {{ review.created_at|date:"Y-m-d" }}</p>
+                    <p class="mb-1"><strong>تاریخ:</strong> {{ review.created_at|date:"Y/m/d" }}</p>
                     <p class="mt-2"><strong>نظر:</strong> {{ review.content }}</p>
                 </div>
             {% endfor %}

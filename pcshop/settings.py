@@ -55,11 +55,14 @@ INSTALLED_APPS = [
     'order',
     'product.apps.ProductConfig',  # Use the full path to `ProductConfig`
     'algoliasearch_django',
+    'django_jalali',
+    'django.contrib.humanize',
  
 
     
     'django_browser_reload',
 ]
+
 
 ALGOLIA = {
   'APPLICATION_ID': os.getenv('ALGO_APPLICATION_ID'),
@@ -76,6 +79,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django_browser_reload.middleware.BrowserReloadMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
 ]
 
 ROOT_URLCONF = 'pcshop.urls'
@@ -138,12 +142,11 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
-
-TIME_ZONE = 'UTC'
+LANGUAGE_CODE = 'fa'  # Persian language
+TIME_ZONE = 'Asia/Tehran'  # Iran's time zone
 
 USE_I18N = True
-
+USE_L10N = True
 USE_TZ = True
 
 
