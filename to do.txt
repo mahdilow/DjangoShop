@@ -11,7 +11,8 @@ data basehost
 order hay jadid dar admin neshan dade shavad
 when product added show this alert https://daisyui.com/components/alert/  *success    https://merakiui.com/components/application-ui/alerts
 
-
+error ha farsi beshan 
+django jalali
 checkout 
 login - signup
 change the admin panel 

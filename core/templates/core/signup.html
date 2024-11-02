@@ -1,105 +1,131 @@
 {% extends 'core/base.html' %}
 
-{% block title %}Sign up{% endblock %}
+{% block title %}ثبت‌نام{% endblock %}
 
 {% block content %}
-<div class="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
-    <div class="mx-auto max-w-lg">
-   
-        <h1 class="text-center text-2xl font-bold text-indigo-600 sm:text-3xl">           
-           Create a new account
-          </h1>
+<div class="min-h-screen bg-gray-800 text-gray-100 flex items-center">
+  <div class="mx-auto max-w-lg w-full px-4 py-16 sm:px-6 lg:px-8">
+    <h1 class="text-center text-2xl font-bold text-blue-400 sm:text-3xl">
+        ایجاد حساب کاربری جدید
+    </h1>
 
-        <form method="post" action="." class="mb-0 mt-6 space-y-4 rounded-lg p-4 shadow-lg sm:p-6 lg:p-8">
-            {% csrf_token %}
-            <p class="text-center text-lg font-medium">Sign Up </p>
-            <div>
-                <div class="relative">
-                  <input
-                    type="text"
-                    class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
-                    placeholder="Enter Username"
-                    name="username"
-                  />
-                </div>
-            </div>
-            <div> 
-                <div class="relative">
-                  <input
-                    type="text"
-                    class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
-                    placeholder="Enter First Name"
-                    name="first_name"
-                  />
-                </div>
-            </div>
-            <div> 
-                <div class="relative">
-                  <input
-                    type="text"
-                    class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
-                    placeholder="Enter Last Name"
-                    name="last_name"
-                  />
-                </div>
-            </div>
-            <div>        
-                <div class="relative">
-                  <input
-                    type="email"
-                    class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
-                    placeholder="Enter E-mail"
-                    name="email"
-                  />
-                </div>
-            </div>
-            <div>      
-                <div class="relative">
-                  <input
-                    type="password"
-                    class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
-                    placeholder="Enter Password"
-                    name="password1"
-                  />
-                </div>
-            </div>
-            
-            <div>               
-                <div class="relative">
-                  <input
-                    type="password"
-                    class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
-                    placeholder="Reapeat Password"
-                    name="password2"
-                  />
-                </div>
-            </div>
+    <form method="post" action="." class="mt-6 space-y-6 rounded-lg p-6 bg-gray-900 shadow-lg">
+      {% csrf_token %}
+      <p class="text-center text-lg font-medium">ثبت‌نام</p>
 
+      <!-- Username Input -->
+      <div class="relative">
+        <span class="absolute inset-y-0 left-4 grid place-content-center text-gray-400">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
+          </svg>
+        </span>
+        <input
+          type="text"
+          class="w-full pl-10 pr-4 rounded-lg bg-white text-gray-900 p-4 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="نام کاربری"
+          name="username"
+        />
+      </div>
 
+      <!-- First Name Input -->
+      <div class="relative">
+        <span class="absolute inset-y-0 left-4 grid place-content-center text-gray-400">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c2.208 0 4-1.792 4-4s-1.792-4-4-4-4 1.792-4 4 1.792 4 4 4zM12 13c-4.337 0-8 2.666-8 6v3h16v-3c0-3.334-3.663-6-8-6z" />
+          </svg>
+        </span>
+        <input
+          type="text"
+          class="w-full pl-10 pr-4 rounded-lg bg-white text-gray-900 p-4 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="نام"
+          name="first_name"
+        />
+      </div>
 
-              
-                    {% for error in form.errors %}
-                        <div class="p-6 bg-red-200 text-red-800 rounded-xl">
-                            <p>{{ error|escape }}  ERROR</p>
-                        </div>
-                    {% endfor %}
-           
-              
+      <!-- Last Name Input -->
+      <div class="relative">
+        <span class="absolute inset-y-0 left-4 grid place-content-center text-gray-400">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11c2.208 0 4-1.792 4-4s-1.792-4-4-4-4 1.792-4 4 1.792 4 4 4zM12 13c-4.337 0-8 2.666-8 6v3h16v-3c0-3.334-3.663-6-8-6z" />
+          </svg>
+        </span>
+        <input
+          type="text"
+          class="w-full pl-10 pr-4 rounded-lg bg-white text-gray-900 p-4 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="نام خانوادگی"
+          name="last_name"
+        />
+      </div>
 
+      <!-- Email Input -->
+      <div class="relative">
+        <span class="absolute inset-y-0 left-4 grid place-content-center text-gray-400">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
+          </svg>
+        </span>
+        <input
+          type="email"
+          class="w-full pl-10 pr-4 rounded-lg bg-white text-gray-900 p-4 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="ایمیل"
+          name="email"
+        />
+      </div>
 
-      
+      <!-- Password Input -->
+      <div class="relative">
+        <span class="absolute inset-y-0 left-4 grid place-content-center text-gray-400">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+          </svg>
+        </span>
+        <input
+          type="password"
+          class="w-full pl-10 pr-4 rounded-lg bg-white text-gray-900 p-4 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="رمز عبور"
+          name="password1"
+        />
+      </div>
 
-            <button
-            type="submit"
-            class="block w-full rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white"
-          >
-            Sign up
-          </button>
-      
-          <p class="text-center text-sm text-gray-500">
-           Already have an account?
-            <a href="{%url 'login'%}" class="font-bold">Sign in</a>
-        </form>
-    </div>
+      <!-- Repeat Password Input -->
+      <div class="relative">
+        <span class="absolute inset-y-0 left-4 grid place-content-center text-gray-400">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+          </svg>
+        </span>
+        <input
+          type="password"
+          class="w-full pl-10 pr-4 rounded-lg bg-white text-gray-900 p-4 text-sm shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="تکرار رمز عبور"
+          name="password2"
+        />
+      </div>
+
+      <!-- Error Messages -->
+      {% for error in form.errors %}
+        <div class="p-4 bg-red-500 text-white rounded-lg">
+          <p>{{ error|escape }} ERROR</p>
+        </div>
+      {% endfor %}
+
+      <!-- Submit Button -->
+      <button
+        type="submit"
+        class="block w-full rounded-lg bg-blue-600 hover:bg-blue-700 px-5 py-3 text-sm font-medium text-white text-center"
+      >
+        ثبت‌نام
+      </button>
+
+      <!-- Sign-in Link -->
+      <p class="text-center text-sm text-gray-400">
+        قبلا حساب کاربری ساخته‌اید؟
+        <a href="{% url 'login' %}" class="font-bold text-blue-500 hover:text-blue-400">ورود</a>
+      </p>
+    </form>
+  </div>
 </div>
 {% endblock %}

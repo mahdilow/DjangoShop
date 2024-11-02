@@ -6,7 +6,10 @@
 
     <!-- Persian Font Link -->
     <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@latest/dist/font-face.css" rel="stylesheet" type="text/css" />
+<!-- Add this to the <head> section of base.html -->
+  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
 
+  
     <!-- Tailwind CDN with RTL and DaisyUI support -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -37,6 +40,8 @@
     <!-- Main Content -->
     <main class="mb-auto">{% block content %} {% endblock %}</main>
 
+  <!-- Add this before the closing </body> tag in base.html -->
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <script src="https://unpkg.com/htmx.org@1.7.0"></script>
     {% block scripts %} {% endblock %}
 
