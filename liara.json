@@ -3,11 +3,7 @@
     "disks":[
         {
             "name":"disk1",
-            "mountTo":"disk1"
-        },
-        {
-            "name":"data",
-            "mountTo":"media/uploads"
+            "mountTo":"media/"
 
 
         }
