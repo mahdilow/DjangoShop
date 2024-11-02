@@ -52,15 +52,22 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'cart',
     'core',
-    'product',
     'order',
-    
-  
+    'product.apps.ProductConfig',  # Use the full path to `ProductConfig`
+    'algoliasearch_django',
+    'django_jalali',
+    'django.contrib.humanize',
+ 
+
     
     'django_browser_reload',
 ]
 
 
+ALGOLIA = {
+  'APPLICATION_ID': os.getenv('ALGO_APPLICATION_ID'),
+  'API_KEY': os.getenv('ALGOLIA_KEY')
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -72,6 +79,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django_browser_reload.middleware.BrowserReloadMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
 ]
 
 ROOT_URLCONF = 'pcshop.urls'
@@ -108,7 +116,7 @@ DATABASES = {
 }
 
 # override env database (postgresql)
-# DATABASES['default'] = dj_database_url.parse(os.getenv('DB_URL'))
+DATABASES['default'] = dj_database_url.parse(os.getenv('DB_URL'))
 
 # for lira data/
 
@@ -134,12 +142,11 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
-
-TIME_ZONE = 'UTC'
+LANGUAGE_CODE = 'fa'  # Persian language
+TIME_ZONE = 'Asia/Tehran'  # Iran's time zone
 
 USE_I18N = True
-
+USE_L10N = True
 USE_TZ = True
 
 
@@ -151,7 +158,10 @@ STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media/'
 # STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+#STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+# settings.py
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field

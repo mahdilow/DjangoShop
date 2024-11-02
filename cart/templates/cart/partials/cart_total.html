@@ -1,1 +1,2 @@
-{{ cart.get_total_cost }} تومان 
+{% load humanize %}
+{{ cart.get_total_cost|intcomma }} تومان 

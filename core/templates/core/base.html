@@ -4,28 +4,34 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Tailwind CDN with RTL support -->
+    <!-- Persian Font Link -->
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazir-font@latest/dist/font-face.css" rel="stylesheet" type="text/css" />
+
+    <!-- Tailwind CDN with RTL and DaisyUI support -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
       tailwind.config = {
         theme: {
           extend: {
-            // Add any theme extensions here
+            fontFamily: {
+              sans: ['Vazir', 'ui-sans-serif', 'system-ui'],
+            },
           },
         },
-        corePlugins: {
-          preflight: false,  // Disable if necessary to avoid conflicts
+        plugins: [require('daisyui'), tailwindcssRTL()],
+        daisyui: {
+          themes: ["dark"],
         },
-        plugins: [tailwindcssRTL()],
       }
     </script>
 
     {% load static %}
+ 
     <link rel="shortcut icon" type="image/x-icon" href="{% static 'core/favicon.ico' %}" />
-    <title>{% block title %}{% endblock %} | PC Shop</title>
+    <title>{% block title %}{% endblock %} | PyroStyle</title>
   </head>
 
-  <body class="bg-blue-50 flex flex-col h-screen">
+  <body class="bg-neutral flex flex-col h-screen text-white font-sans">
     <!-- Navbar -->
     {% include 'core/navbar.html' %}
 

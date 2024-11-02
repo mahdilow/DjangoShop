@@ -1,85 +1,77 @@
+{% load humanize %}
 {% if item %}
-<div class="product mb-6 flex pl-6" id="cart-item-{{ item.product.id }}">
-  <a href="{% url 'product' item.product.slug %}" class="w-1/4">
+<div class="product mb-6 flex p-4 bg-gray-900 rounded-xl items-center" id="cart-item-{{ item.product.id }}">
+  <a href="{% url 'product' item.product.slug %}" class="w-24 h-24">
     <img
-      class="hover:shadow-lg rounded-xl"
+      class="hover:shadow-lg rounded-xl object-cover w-full h-full"
       src="{{ item.product.get_thumbnail }}"
+      alt="{{ item.product.name }}"
     />
   </a>
 
   <div class="w-3/4 pr-6">
-    <div class="flex justify-between">
-      <a href="{% url 'product' item.product.slug %}" class="text-lg"
-        >{{ item.product.name }}</a
-      >
-
-      <span class="mb-6 pt-1 text-gray-400">{{ item.total_price }} تومان</span>
+    <!-- Product Info and Price -->
+    <div class="flex justify-between items-center mb-2">
+      <a href="{% url 'product' item.product.slug %}" class="text-lg font-semibold text-white hover:text-gray-300">
+        {{ item.product.name }}
+      </a>
+      <span class="text-gray-400">{{ item.total_price|intcomma }} تومان</span>
     </div>
 
-    <hr />
+    <hr class="border-gray-700 mb-2" />
 
-    <div class="quantity mt-6 flex items-center space-x-reverse space-x-4">
-      <div class="w-auto h-auto">
-        <div class="flex-1 h-full">
-          <div
-            class="flex items-center justify-center flex-1 h-full p-2 bg-red-500 text-white shadow rounded-full hover:bg-red-800 hover:cursor-pointer"
+    <!-- Quantity Controls -->
+    <div class="quantity mt-4 flex items-center space-x-reverse space-x-4">
+      <!-- Decrement Button -->
+      <div class="w-auto">
+        <div
+          class="flex items-center justify-center p-2 bg-red-600 text-white shadow-md rounded-full hover:bg-red-800 cursor-pointer"
+        >
+          <a
+            hx-get="{% url 'update_cart' item.product.id 'decrement' %}"
+            hx-target="#cart-item-{{ item.product.id }}"
+            hx-swap="outerHTML"
           >
-            <a
-              hx-get="{% url 'update_cart' item.product.id 'decrement' %}"
-              hx-target="#cart-item-{{ item.product.id }}"
-              hx-swap="outerHTML"
+            <!-- Bold circular minus icon -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              class="w-6 h-6"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke-width="1.5"
-                stroke="currentColor"
-                class="w-6 h-6"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  d="M18 12H6"
-                />
-              </svg>
-            </a>
-          </div>
+              <circle cx="12" cy="12" r="10" class="text-white fill-current" />
+              <rect x="8" y="11" width="8" height="2" fill="black"/>
+            </svg>
+          </a>
         </div>
       </div>
 
-      <span>{{ item.quantity }}</span>
+      <span class="text-white">{{ item.quantity }}</span>
 
-      <!--increment button-->
-      <div class="w-auto h-auto">
-        <div class="flex-1 h-full">
-          <div
-            class="flex items-center justify-center flex-1 h-full p-2 bg-green-500 text-white shadow rounded-full hover:bg-green-800 hover:cursor-pointer"
+      <!-- Increment Button -->
+      <div class="w-auto">
+        <div
+          class="flex items-center justify-center p-2 bg-green-600 text-white shadow-md rounded-full hover:bg-green-800 cursor-pointer"
+        >
+          <a
+            hx-get="{% url 'update_cart' item.product.id 'increment' %}"
+            hx-target="#cart-item-{{ item.product.id }}"
+            hx-swap="outerHTML"
           >
-            <a
-              hx-get="{% url 'update_cart' item.product.id 'increment' %}"
-              hx-target="#cart-item-{{ item.product.id }}"
-              hx-swap="outerHTML"
+            <!-- Bold circular plus icon -->
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+              class="w-6 h-6"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="h-6 w-6"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-                />
-              </svg>
-            </a>
-          </div>
+              <circle cx="12" cy="12" r="10" class="text-white fill-current" />
+              <path d="M12 8v8m-4-4h8" stroke="black" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </a>
         </div>
       </div>
     </div>
   </div>
-{% endif %}
 </div>
+{% endif %}
