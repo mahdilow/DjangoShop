@@ -13,6 +13,9 @@
       {% csrf_token %}
       <p class="text-center text-lg font-medium">حساب <span class="text-blue-500">PyroStyle </span></p>
 
+      <!-- Hidden input for next URL -->
+      <input type="hidden" name="next" value="{{ request.GET.next }}">
+
       <!-- Username Input -->
       <div class="relative">
         <span class="absolute inset-y-0 left-4 grid place-content-center text-gray-400">

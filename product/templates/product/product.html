@@ -6,13 +6,15 @@
 <div class="min-h-screen flex justify-center items-center bg-gray-800">
     <div class="max-w-6xl w-full flex flex-wrap py-8 px-6 lg:px-0">
         
-        <!-- Product Image Section -->
+        <!-- Product Image Section with Fixed Size -->
         <div class="w-full lg:w-3/5 mb-6 lg:mb-0">
-            <img 
-                class="rounded-xl w-full object-cover" 
-                src="{% if product.image %}{{ product.image.url }}{% else %}https://via.placeholder.com/240x240.jpg{% endif %}" 
-                alt="{{ product.name }}"
-            >
+            <div class="w-full h-96 overflow-hidden rounded-xl">
+                <img 
+                    class="w-full h-full object-cover" 
+                    src="{% if product.image %}{{ product.image.url }}{% else %}https://via.placeholder.com/240x240.jpg{% endif %}" 
+                    alt="{{ product.name }}"
+                >
+            </div>
         </div>
 
         <!-- Product Information Section -->
@@ -42,10 +44,11 @@
         </div>
 
         <!-- Reviews Section -->
-        <div class="w-full mt-8">
+        <div id="reviews" class="w-full mt-8">
             <h2 class="text-2xl text-blue-400 font-semibold mb-4">نظرات</h2>
 
             {% if request.user.is_authenticated %}
+                <!-- Review Form for Logged-In Users -->
                 <form method="post" action="." class="mt-6 p-6 bg-gray-900 rounded-xl">
                     {% csrf_token %}
 
@@ -67,6 +70,15 @@
                         <button class="bg-blue-500 hover:bg-blue-700 text-white px-6 py-2 rounded-lg transition">ثبت نظر</button>
                     </div>
                 </form>
+            {% else %}
+                <!-- Sign-In Prompt for Non-Authenticated Users -->
+                <p class="text-gray-400 text-center mt-6">
+                    برای ثبت نظر، لطفاً 
+                    <a href="{% url 'login' %}?next={{ request.path }}#reviews" class="text-blue-400 hover:underline">
+                        وارد شوید
+                    </a>.
+                </p>
+                
             {% endif %}
 
             {% for review in product.reviews.all %}
