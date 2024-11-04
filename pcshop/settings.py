@@ -116,7 +116,7 @@ DATABASES = {
 }
 
 # override env database (postgresql)
-DATABASES['default'] = dj_database_url.parse(os.getenv('DB_URL'))
+#DATABASES['default'] = dj_database_url.parse(os.getenv('DB_URL'))
 
 # for lira data/
 

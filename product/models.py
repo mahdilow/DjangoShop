@@ -2,13 +2,13 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.core.files import File
 from io import BytesIO
-from PIL import Image
+from PIL import Image,ImageFilter
 from django_jalali.db import models as jmodels
 
 class Category(models.Model):
     name = models.CharField(max_length=255)
     slug = models.SlugField()
-    thumbnail = models.ImageField(upload_to='category_thumbnails/', blank=True, null=True)  # Thumbnail field
+    thumbnail = models.ImageField(upload_to='category_thumbnails/', blank=True, null=True)
 
     class Meta:
         verbose_name_plural = 'Categories'
@@ -21,8 +21,7 @@ class Category(models.Model):
         if self.thumbnail:
             return self.thumbnail.url
         else:
-            return 'https://via.placeholder.com/240x240.jpg'  # Default image if no thumbnail is set
-
+            return 'https://via.placeholder.com/240x240.jpg'
 
 class Product(models.Model):
     category = models.ForeignKey(Category, related_name='products', on_delete=models.CASCADE)
@@ -47,25 +46,36 @@ class Product(models.Model):
         if self.thumbnail:
             return self.thumbnail.url
         elif self.image:
+            # Generate the thumbnail if it doesn’t exist
             self.thumbnail = self.make_thumbnail(self.image)
-            self.save()
+            # Save the model instance with the new thumbnail
+            self.save(update_fields=['thumbnail'])
             return self.thumbnail.url
         else:
-            return 'https://via.placeholder.com/240x240x.jpg'
+            return 'https://via.placeholder.com/240x240.jpg'
     
-    def make_thumbnail(self, image, size=(300, 300)):
+    def make_thumbnail(self, image, size=(500, 500)):
         img = Image.open(image)
-        img.convert('RGB')
-        img.thumbnail(size)
+        img = img.convert('RGB')
+        
+        # Progressive downscaling
+        while img.size[0] > 2 * size[0] and img.size[1] > 2 * size[1]:
+            img = img.resize((img.size[0] // 2, img.size[1] // 2), Image.LANCZOS)
+
+        # Final resize to target size
+        img = img.resize(size, Image.LANCZOS)
+        img = img.filter(ImageFilter.SHARPEN)
+        
         thumb_io = BytesIO()
-        img.save(thumb_io, 'JPEG', quality=85)
+        img.save(thumb_io, 'JPEG', quality=95)
+        
         thumbnail = File(thumb_io, name=image.name)
         return thumbnail
 
+
     def get_rating(self):
         reviews_total = sum(review.rating for review in self.reviews.all())
-        return reviews_total / self.reviews.count() if reviews_total > 0 else 0
-
+        return reviews_total / self.reviews.count() if self.reviews.count() > 0 else 0
 
 class Review(models.Model):
     product = models.ForeignKey(Product, related_name='reviews', on_delete=models.CASCADE)

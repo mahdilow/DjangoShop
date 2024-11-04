@@ -3,30 +3,31 @@
 {% block title %}Shop{% endblock %}
 
 {% block content %}
-<div class="max-w-full mx-auto py-8 px-6 lg:px-12 flex flex-wrap lg:flex-nowrap gap-6 items-start bg-gray-800 shadow-lg">
-
-    <!-- Sidebar for Categories with Transparent Background and Styling -->
-    <aside class="filters w-full lg:w-1/5 bg-gray-700 bg-opacity-60 p-4 rounded-lg shadow-lg">
-        <h3 class="text-2xl font-semibold text-gray-200 mb-4">دسته‌بندی‌ها</h3>
-        <div class="space-y-3 pl-2">
-            <a href="{% url 'shop' %}"
-               class="block text-lg font-medium py-2 px-3 rounded-lg transition-all duration-300 hover:bg-purple-500 hover:text-white {% if not active_category %}text-purple-400{% else %}text-gray-400{% endif %}">
-               همه دسته‌ها
-            </a>
-            {% for category in categories %}
-                <a href="{% url 'shop' %}?category={{ category.slug }}"
-                   class="block text-lg font-medium py-2 px-3 rounded-lg transition-all duration-300 hover:bg-purple-500 hover:text-white {% if category.slug == active_category %}text-purple-400{% else %}text-gray-400{% endif %}">
-                   {{ category.name }}
+<div class="bg-gray-800 min-h-screen py-8"> <!-- Full background container to cover entire section -->
+    <div class="max-w-full mx-auto px-6 lg:px-12 flex flex-wrap lg:flex-nowrap gap-6 items-start">
+        <!-- Sidebar for Categories with consistent coloring -->
+        <aside class="filters w-full lg:w-1/5 bg-gray-900 p-4 rounded-lg shadow-lg">
+            <h3 class="text-2xl font-semibold text-gray-300 mb-4">دسته‌بندی‌ها</h3>
+            <div class="space-y-3 pl-2">
+                <a href="{% url 'shop' %}"
+                   class="block text-lg font-medium py-2 px-3 rounded-lg transition-all duration-300 hover:bg-purple-500 hover:text-white {% if not active_category %}text-purple-400{% else %}text-gray-400{% endif %}">
+                   همه دسته‌ها
                 </a>
-            {% endfor %}
-        </div>
-    </aside>
+                {% for category in categories %}
+                    <a href="{% url 'shop' %}?category={{ category.slug }}"
+                       class="block text-lg font-medium py-2 px-3 rounded-lg transition-all duration-300 hover:bg-purple-500 hover:text-white {% if category.slug == active_category %}text-purple-400{% else %}text-gray-400{% endif %}">
+                       {{ category.name }}
+                    </a>
+                {% endfor %}
+            </div>
+        </aside>
 
-    <!-- Product List -->
-    <section class="products w-full lg:w-4/5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-        {% for product in products %}
-           {% include 'product/partials/product_list_item.html' %}
-        {% endfor %}
-    </section>
+        <!-- Product List section with unified styling -->
+        <section class="products w-full lg:w-4/5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {% for product in products %}
+            {% include 'product/partials/product_list_item.html' %}
+          {% endfor %}
+        </section>
+    </div>
 </div>
 {% endblock %}
