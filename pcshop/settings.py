@@ -57,7 +57,6 @@ INSTALLED_APPS = [
     'algoliasearch_django',
     'django_jalali',
     'django.contrib.humanize',
-    'django_extensions',
  
 
     
