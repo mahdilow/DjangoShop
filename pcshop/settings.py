@@ -53,10 +53,11 @@ INSTALLED_APPS = [
     'cart',
     'core',
     'order',
-    'product.apps.ProductConfig',  # Use the full path to `ProductConfig`
+    'product.apps.ProductConfig',  
     'algoliasearch_django',
     'django_jalali',
     'django.contrib.humanize',
+    'django_extensions',
  
 
     
@@ -116,7 +117,7 @@ DATABASES = {
 }
 
 # override env database (postgresql)
-#DATABASES['default'] = dj_database_url.parse(os.getenv('DB_URL'))
+DATABASES['default'] = dj_database_url.parse(os.getenv('DB_URL'))
 
 # for lira data/
 
