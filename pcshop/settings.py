@@ -16,7 +16,7 @@ import os
 
 
 
-load_dotenv()
+load_dotenv('liara.env')
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -57,7 +57,7 @@ INSTALLED_APPS = [
     'algoliasearch_django',
     'django_jalali',
     'django.contrib.humanize',
- 
+    'storages',
 
     
     'django_browser_reload',
@@ -118,7 +118,7 @@ DATABASES = {
 # override env database (postgresql)
 DATABASES['default'] = dj_database_url.parse(os.getenv('DB_URL'))
 
-# for lira data/
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -162,7 +162,7 @@ MEDIA_ROOT = BASE_DIR / 'media/'
 # STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 #STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # settings.py
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+#STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 
 # Default primary key field type
@@ -170,4 +170,28 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-NPM_BIN_PATH = "C:/Program Files/nodejs/npm.cmd"
+#NPM_BIN_PATH = "C:/Program Files/nodejs/npm.cmd"
+
+
+# S3 Settings
+LIARA_ENDPOINT    = os.getenv("LIARA_ENDPOINT")
+LIARA_BUCKET_NAME = os.getenv("LIARA_BUCKET_NAME")
+LIARA_ACCESS_KEY  = os.getenv("LIARA_ACCESS_KEY")
+LIARA_SECRET_KEY  = os.getenv("LIARA_SECRET_KEY")
+
+# S3 Settings Based on AWS (optional)
+AWS_ACCESS_KEY_ID       = LIARA_ACCESS_KEY
+AWS_SECRET_ACCESS_KEY   = LIARA_SECRET_KEY
+AWS_STORAGE_BUCKET_NAME = LIARA_BUCKET_NAME
+AWS_S3_ENDPOINT_URL     = LIARA_ENDPOINT
+AWS_S3_REGION_NAME      = 'us-east-1'  
+
+# Django-storages configuration
+STORAGES = {
+  "default": {
+      "BACKEND": "storages.backends.s3.S3Storage",
+  },
+  "staticfiles": {
+      "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+  },
+}
