@@ -142,13 +142,15 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
-LANGUAGE_CODE = 'fa'  # Persian language
+LANGUAGE_CODE = 'fa-ir'  # Persian language
 TIME_ZONE = 'Asia/Tehran'  # Iran's time zone
 
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
+FILE_CHARSET = 'utf-8'
+DEFAULT_CHARSET = 'utf-8'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
