@@ -4,23 +4,19 @@ footer - done
 product detail design - done 
 site name - done 
 http://127.0.0.1:8000/myaccount/   bayad center shavad - done
-signal
-email - sms - to user
-add cancell status to orders
-data basehost 
-order hay jadid dar admin neshan dade shavad
-when product added show this alert https://daisyui.com/components/alert/  *success    https://merakiui.com/components/application-ui/alerts
-implement multiple images in the prodcut detail page
+google auth
+change ordered and shipped 
+hamburger delay
 error ha farsi beshan 
-django jalali
-checkout 
-login - signup
+add cancell status to orders
 change the admin panel 
-
 github readme 
 thumbs up and down for each review
 kam kardan time load pics
-
-
-hamburger delay
-google auth
+order hay jadid dar admin neshan dade shavad
+email - sms - to user
+signal
+when product added show this alert https://daisyui.com/components/alert/  *success    https://merakiui.com/components/application-ui/alerts
+implement multiple images in the prodcut detail page
+checkout 
+payment
