@@ -16,7 +16,6 @@ import os
 
 
 
-load_dotenv('liara.env')
 load_dotenv('')
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
