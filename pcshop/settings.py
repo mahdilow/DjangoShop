@@ -16,7 +16,7 @@ import os
 
 
 
-#load_dotenv(find_dotenv())
+load_dotenv(find_dotenv())
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -118,7 +118,7 @@ DATABASES = {
 }
 
 # override env database (postgresql)
-DATABASES['default'] = dj_database_url.parse(os.getenv('DB_URL'))
+#DATABASES['default'] = dj_database_url.parse(os.getenv('DB_URL'))
 
 
 

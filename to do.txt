@@ -20,3 +20,5 @@ when product added show this alert https://daisyui.com/components/alert/  *succe
 implement multiple images in the prodcut detail page
 checkout 
 payment
+picture sesstion
+dockerize with docker compose
