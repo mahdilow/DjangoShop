@@ -97,7 +97,7 @@ class Product(models.Model):
         else:
             off_amount = off.amount
 
-        return max(self.price - off_amount, Decimal('0'))
+        return max(self.price - off_amount, Decimal('0')) 
 
     def price_display(self):
         off_price = self.get_off_price()

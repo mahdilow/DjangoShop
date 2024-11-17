@@ -1,20 +1,16 @@
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
-
 from .cart import Cart
-
 from product.models import Product
 
 def add_to_cart(request, product_id):
     cart = Cart(request)
     cart.add(product_id)
-
     return render(request, 'cart/partials/menu_cart.html')
 
 def cart(request):
     return render(request, 'cart/cart.html')
-
 
 def update_cart(request, product_id, action):
     cart = Cart(request)
@@ -23,12 +19,13 @@ def update_cart(request, product_id, action):
         cart.add(product_id, 1, True)
     else:
         cart.add(product_id, -1, True)
-    
+
     product = Product.objects.get(pk=product_id)
     quantity = cart.get_item(product_id)
-    
+
     if quantity:
         quantity = quantity['quantity']
+        discounted_price = product.get_off_price()
 
         item = {
             'product': {
@@ -36,10 +33,12 @@ def update_cart(request, product_id, action):
                 'name': product.name,
                 'image': product.image,
                 'get_thumbnail': product.get_thumbnail(),
-                'price': product.price,
-                'slug':product.slug,
+                'price': product.price,  # Original price
+                'discounted_price': discounted_price,  # Discounted price
+                'slug': product.slug,
             },
-            'total_price': (quantity * product.price),
+            'total_price': (quantity * discounted_price),
+            'original_total_price': (quantity * product.price),  # Total at original price
             'quantity': quantity,
         }
     else:
@@ -52,7 +51,7 @@ def update_cart(request, product_id, action):
 
 @login_required
 def checkout(request):
-    return render(request, 'cart/checkout.html', )
+    return render(request, 'cart/checkout.html')
 
 def hx_menu_cart(request):
     return render(request, 'cart/partials/menu_cart.html')

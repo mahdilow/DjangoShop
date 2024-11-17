@@ -6,6 +6,7 @@ site name - done
 http://127.0.0.1:8000/myaccount/   bayad center shavad - done
 dockerize with docker compose - done 
 hamburger delay - done(may do it for the menu too)
+discount - done
 ------------------------------------------------------------------------------------------
 google auth
 change ordered and shipped 
@@ -22,6 +23,7 @@ when product added show this alert https://daisyui.com/components/alert/  *succe
 implement multiple images in the prodcut detail page
 checkout 
 payment
+discount in orders is not working
 picture sesstion
 active search -  hyperscrtipt
 email confirmation when editing or signing up with email
