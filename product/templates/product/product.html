@@ -21,7 +21,32 @@
         <!-- Product Information Section -->
         <div class="w-full lg:w-2/5 lg:p-6">
             <h1 class="text-3xl font-bold text-blue-400 mb-2">{{ product.name }}</h1>
-            <p class="text-xl font-semibold text-green-500 mb-4">تومان{{ product.price_display|intcomma }}</p>
+            
+            <!-- Price Display Section -->
+            {% if product.get_off_price < product.price %}
+                <!-- Original Price (crossed out) -->
+                <p class="text-lg text-gray-400 line-through mb-1">
+                    تومان {{ product.price|intcomma }}
+                </p>
+                <!-- Discounted Price -->
+                <p class="text-2xl font-semibold text-green-500 mb-4">
+                    تومان {{ product.get_off_price|intcomma }}
+                    <span class="text-sm text-red-400 mr-2">
+                        {% with off=product.get_off %}
+                            {% if off.off_type == 'percentage' %}
+                                {{ off.amount }}% تخفیف
+                            {% else %}
+                                {{ off.amount|intcomma }} تومان تخفیف
+                            {% endif %}
+                        {% endwith %}
+                    </span>
+                </p>
+            {% else %}
+                <!-- Regular Price (no discount) -->
+                <p class="text-xl font-semibold text-green-500 mb-4">
+                    تومان {{ product.price|intcomma }}
+                </p>
+            {% endif %}
 
             {% if product.get_rating > 0 %}
                 <p class="text-gray-400 mb-2">امتیاز: {{ product.get_rating }} / 10</p>

@@ -1,14 +1,44 @@
 {% load humanize %}
 <div class="card bg-gray-900 shadow-xl text-center rounded-lg">
-    <figure class="overflow-hidden rounded-lg h-64 flex items-center justify-center">
+    <figure class="overflow-hidden rounded-lg h-64 flex items-center justify-center relative">
         <img src="{{ product.get_thumbnail }}" alt="{{ product.name }}" class="object-cover w-full h-full transition-transform duration-300 transform hover:scale-105"/>
+        {% if product.get_off_price < product.price %}
+            <div class="absolute top-0 right-0 bg-red-500 text-white px-2 py-1 rounded-bl-lg text-sm">
+                {% with off=product.get_off %}
+                    {% if off.off_type == 'percentage' %}
+                        {{ off.amount }}% تخفیف
+                    {% else %}
+                        {{ off.amount|intcomma }} تومان تخفیف
+                    {% endif %}
+                {% endwith %}
+            </div>
+        {% endif %}
     </figure>
     <div class="card-body text-white p-4">
         <h3 class="card-title font-bold text-lg mb-2 text-gray-200">{{ product.name }}</h3>
-        <p class="text-green-500 text-lg font-semibold inline">
-            {{ product.price|intcomma }}
-        </p>
-        <span class="text-gray-300 text-lg font-semibold"> تومان</span>
+        
+        {% if product.get_off_price < product.price %}
+            <!-- Original Price (crossed out) -->
+            <div class="mb-1">
+                <p class="text-gray-400 line-through text-sm inline">
+                    {{ product.price|intcomma }}
+                    <span class="text-gray-400">تومان</span>
+                </p>
+            </div>
+            <!-- Discounted Price -->
+            <div>
+                <p class="text-green-500 text-lg font-semibold inline">
+                    {{ product.get_off_price|intcomma }}
+                </p>
+                <span class="text-gray-300 text-lg font-semibold">تومان</span>
+            </div>
+        {% else %}
+            <!-- Regular Price -->
+            <p class="text-green-500 text-lg font-semibold inline">
+                {{ product.price|intcomma }}
+            </p>
+            <span class="text-gray-300 text-lg font-semibold">تومان</span>
+        {% endif %}
 
         <div class="flex justify-between items-center mt-4">
             <!-- Add to Cart Button with SVG only -->

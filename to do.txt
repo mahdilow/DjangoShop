@@ -4,9 +4,11 @@ footer - done
 product detail design - done 
 site name - done 
 http://127.0.0.1:8000/myaccount/   bayad center shavad - done
+dockerize with docker compose - done 
+hamburger delay - done(may do it for the menu too)
+------------------------------------------------------------------------------------------
 google auth
 change ordered and shipped 
-hamburger delay
 error ha farsi beshan 
 add cancell status to orders
 change the admin panel 
@@ -21,4 +23,7 @@ implement multiple images in the prodcut detail page
 checkout 
 payment
 picture sesstion
-dockerize with docker compose
+active search -  hyperscrtipt
+email confirmation when editing or signing up with email
+link google if user sign up witout google
+cupon

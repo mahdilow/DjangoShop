@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'product.apps.ProductConfig',  
     'algoliasearch_django',
     'django_jalali',
+    'django_jalali.db',
     'django.contrib.humanize',
     'storages',
 
