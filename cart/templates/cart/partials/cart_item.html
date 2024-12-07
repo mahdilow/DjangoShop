@@ -19,65 +19,27 @@
         {% if item.original_total_price > item.total_price %}
             <span class="line-through text-red-500 text-xs">{{ item.original_total_price|intcomma }} تومان</span>
         {% endif %}
-    
         <span class="text-green-500 font-semibold text-lg">{{ item.total_price|intcomma }} تومان</span>
-    </div>
-    
+      </div>
     </div>
 
     <hr class="border-gray-700 mb-2" />
 
-    <!-- Quantity Controls -->
-    <div class="quantity mt-4 flex items-center space-x-reverse space-x-4">
-      <!-- Decrement Button -->
-      <div class="w-auto">
-        <div
-          class="flex items-center justify-center p-2 bg-red-600 text-white shadow-md rounded-full hover:bg-red-800 cursor-pointer"
-        >
-          <a
-            hx-get="{% url 'update_cart' item.product.id 'decrement' %}"
-            hx-target="#cart-item-{{ item.product.id }}"
-            hx-swap="outerHTML"
-          >
-            <!-- Bold circular minus icon -->
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              class="w-6 h-6"
-            >
-              <circle cx="12" cy="12" r="10" class="text-white fill-current" />
-              <rect x="8" y="11" width="8" height="2" fill="black"/>
-            </svg>
-          </a>
-        </div>
-      </div>
-
-      <span class="text-white">{{ item.quantity }}</span>
-
-      <!-- Increment Button -->
-      <div class="w-auto">
-        <div
-          class="flex items-center justify-center p-2 bg-green-600 text-white shadow-md rounded-full hover:bg-green-800 cursor-pointer"
-        >
-          <a
-            hx-get="{% url 'update_cart' item.product.id 'increment' %}"
-            hx-target="#cart-item-{{ item.product.id }}"
-            hx-swap="outerHTML"
-          >
-            <!-- Bold circular plus icon -->
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              class="w-6 h-6"
-            >
-              <circle cx="12" cy="12" r="10" class="text-white fill-current" />
-              <path d="M12 8v8m-4-4h8" stroke="black" stroke-width="2" stroke-linecap="round"/>
-            </svg>
-          </a>
-        </div>
-      </div>
+    <!-- Quantity Controls - Pill Style -->
+    <div class="quantity mt-4 inline-flex items-center bg-gray-800 rounded-full px-2 py-1">
+      <a hx-get="{% url 'update_cart' item.product.id 'decrement' %}"
+        hx-target="#cart-item-{{ item.product.id }}"
+        hx-swap="outerHTML"
+        class="text-gray-400 hover:text-white px-2 transition-colors cursor-pointer">
+        －
+      </a>
+      <span class="text-white px-3 text-sm font-medium border-x border-gray-700">{{ item.quantity }}</span>
+      <a hx-get="{% url 'update_cart' item.product.id 'increment' %}"
+        hx-target="#cart-item-{{ item.product.id }}"
+        hx-swap="outerHTML"
+        class="text-gray-400 hover:text-white px-2 transition-colors cursor-pointer">
+        ＋
+      </a>
     </div>
   </div>
 </div>

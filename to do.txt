@@ -12,15 +12,16 @@ google auth
 change ordered and shipped 
 error ha farsi beshan 
 add cancell status to orders
-change the admin panel 
 github readme 
 thumbs up and down for each review
 kam kardan time load pics
 order hay jadid dar admin neshan dade shavad
 email - sms - to user
 signal
+phone number
 when product added show this alert https://daisyui.com/components/alert/  *success    https://merakiui.com/components/application-ui/alerts
 implement multiple images in the prodcut detail page
+change the admin panel 
 checkout 
 payment
 discount in orders is not working
