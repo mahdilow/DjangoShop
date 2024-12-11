@@ -47,7 +47,7 @@
             <p class="font-semibold tex-white">وضعیت سفارش:
                 <span class="text-green-500 font-bold"> {{ order.status }}</span>
             </p>
-            <p class="text-lg text-white font-semibold">تاریخ: <span class="text-blue-200">{{ order.created_at }}</span></p>
+            <p class="text-lg text-white font-semibold">تاریخ: <span class="text-blue-200">{{ order.created_at | jformat:" %Y/%m/%d - %H:%M" }}</span></p>
             <p class="text-lg text-white font-semibold">مجموع: <span class="text-blue-300">{{ order.get_total_price }} تومان</span></p>
         </div>
         
