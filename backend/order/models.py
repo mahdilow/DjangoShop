@@ -1,7 +1,7 @@
 from itertools import product
 from django.contrib.auth.models import User
 from django.db import models
-
+from django_jalali.db import models as jmodels
 from product.models import Product
 
 class Order(models.Model):
@@ -22,7 +22,7 @@ class Order(models.Model):
     place = models.CharField(max_length=255)
     phone = models.CharField(max_length=255)
 
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = jmodels.jDateTimeField(auto_now_add=True)
 
     paid = models.BooleanField(default=False)
     paid_amount = models.IntegerField(blank=True, null=True)

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+        }
+        h1 {
+            color: #333;
+        }
+        .product {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 10px;
+            margin: 10px 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .product img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+        .product h3 {
+            margin: 0;
+            color: #007bff;
+        }
+        .product p {
+            margin: 5px 0;
+            color: #555;
+        }
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>لیست محصولات</h1>
+    <div id="product-container"></div>
+    <p class="error" id="error-message"></p>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        const apiBaseUrl = "http://127.0.0.1:8000/api/products/";
+
+        // Function to fetch products
+        async function fetchProducts() {
+            try {
+                const response = await axios.get(apiBaseUrl);
+                const products = response.data;
+                displayProducts(products);
+            } catch (error) {
+                console.error("Error fetching products:", error);
+                document.getElementById('error-message').innerText = 
+                    "Failed to fetch products. Make sure the backend is running.";
+            }
+        }
+
+        // Function to display products
+        function displayProducts(products) {
+            const container = document.getElementById('product-container');
+            container.innerHTML = ''; // Clear previous content
+            products.forEach(product => {
+                const productDiv = document.createElement('div');
+                productDiv.className = 'product';
+                productDiv.innerHTML = `
+                    <img src="${product.thumbnail}" alt="${product.name}" />
+                    <div>
+                        <h3>${product.name}</h3>
+                        <p>Price: ${product.price} تومان</p>
+                        <p>${product.description}</p>
+                    </div>
+                `;
+                container.appendChild(productDiv);
+            });
+        }
+
+        // Fetch products on page load
+        fetchProducts();
+    </script>
+</body>
+</html>

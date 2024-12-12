@@ -29,3 +29,5 @@ active search -  hyperscrtipt
 email confirmation when editing or signing up with email
 link google if user sign up witout google
 cupon
+latest comments
+export to pdf / excel
