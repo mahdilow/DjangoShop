@@ -1,8 +1,10 @@
 from itertools import product
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.db import models
 from django_jalali.db import models as jmodels
 from product.models import Product
+
+User = get_user_model()
 
 class Order(models.Model):
     ORDERED = 'ordered'

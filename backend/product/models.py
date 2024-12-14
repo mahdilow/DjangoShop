@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.core.files import File
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.utils import timezone
@@ -7,6 +7,8 @@ from io import BytesIO
 from PIL import Image,ImageFilter
 from django_jalali.db import models as jmodels
 from decimal import Decimal
+
+User = get_user_model()
 
 class Category(models.Model):
     name = models.CharField(max_length=255)
