@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.core.files import File
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.utils import timezone
@@ -8,13 +8,14 @@ from PIL import Image,ImageFilter
 from django_jalali.db import models as jmodels
 from decimal import Decimal
 
+User = get_user_model()
 class Category(models.Model):
     name = models.CharField(max_length=255)
     slug = models.SlugField()
     thumbnail = models.ImageField(upload_to='category_thumbnails/', blank=True, null=True)
 
     class Meta:
-        verbose_name_plural = 'Categories'
+        verbose_name_plural = 'دسته بندی ها'
         ordering = ('name',)
     
     def __str__(self):

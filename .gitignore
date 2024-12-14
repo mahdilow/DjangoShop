@@ -106,7 +106,8 @@ ENV/
 env.bak/ 
 venv.bak/ 
 liara.env
-
+backend.env
+postgres.env
 # mkdocs documentation 
 /site 
 

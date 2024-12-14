@@ -16,7 +16,12 @@ import os
 
 
 
-load_dotenv(find_dotenv())
+# Load backend.env
+load_dotenv(find_dotenv("backend.env"))
+
+# Load postgres.env
+load_dotenv(find_dotenv("postgres.env"))
+
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -108,19 +113,20 @@ TEMPLATES = [
 WSGI_APPLICATION = 'pcshop.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/4.0/ref/settings/#databases
+# Database configuration
+DATABASE_URL = os.environ.get("DB_URL")
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+if DATABASE_URL:
+    # Use PostgreSQL if DB_URL is set
+    DATABASES = {"default": dj_database_url.config(default=DATABASE_URL)}
+else:
+    # Fall back to SQLite if DB_URL is not set
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
     }
-}
-
-# override env database (postgresql)
-#DATABASES['default'] = dj_database_url.parse(os.getenv('DB_URL'))
-
 
 
 # Password validation
@@ -196,3 +202,5 @@ STORAGES = {
       "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
   },
 }
+
+AUTH_USER_MODEL ='core.User'

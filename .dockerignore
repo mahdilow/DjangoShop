@@ -11,6 +11,8 @@ venv/
 env/
 .venv/
 .pyenv/
+backend.env
+postgres.env
 
 # Distribution / packaging
 .Python
