@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
+from datetime import timedelta
 import dj_database_url
 from pathlib import Path
 from dotenv import find_dotenv, load_dotenv
@@ -52,6 +53,7 @@ CART_SESSION_ID = "cart"
 
 INSTALLED_APPS = [
     "django.contrib.admin",
+    "authapp.apps.AuthappConfig",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
@@ -71,6 +73,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "corsheaders",
     "drf_spectacular",
+    "rest_framework_simplejwt",
 ]
 
 
@@ -217,6 +220,18 @@ STORAGES = {
 
 REST_FRAMEWORK = {
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+    
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
 }
 
-AUTH_USER_MODEL = "core.User"
+AUTH_USER_MODEL = "authapp.User"
+
+
+KAVENEGAR_API_KEY = os.getenv("KAVENEGAR_API_KEY")
+
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+}

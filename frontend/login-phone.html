@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phone Login</title>
+</head>
+<body>
+    <h1>Phone Login</h1>
+
+    <!-- Phone Number Input -->
+    <div>
+        <label for="phone">Phone Number:</label>
+        <input type="text" id="phone" placeholder="Enter your phone number">
+        <button id="send-otp">Send OTP</button>
+    </div>
+
+    <!-- OTP Input -->
+    <div>
+        <label for="otp">OTP:</label>
+        <input type="text" id="otp" placeholder="Enter OTP">
+        <button id="verify-otp">Verify OTP</button>
+    </div>
+
+    <script>
+        const apiBaseUrl = 'http://127.0.0.1:8000'; // Adjust as needed
+
+        document.getElementById('send-otp').addEventListener('click', () => {
+            const phone = document.getElementById('phone').value;
+
+            fetch(`${apiBaseUrl}/auth/phone-login/`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ phone_number: phone }),
+            })
+            .then(response => response.json())
+            .then(data => alert(data.message || data.error))
+            .catch(err => console.error(err));
+        });
+
+        document.getElementById('verify-otp').addEventListener('click', () => {
+            const phone = document.getElementById('phone').value;
+            const otp = document.getElementById('otp').value;
+
+            fetch(`${apiBaseUrl}/auth/verify-otp/`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ phone_number: phone, otp: otp }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.access) {
+                    alert('Login successful!');
+                    console.log('Access Token:', data.access);
+                    console.log('Refresh Token:', data.refresh);
+                } else {
+                    alert(data.error);
+                }
+            })
+            .catch(err => console.error(err));
+        });
+    </script>
+</body>
+</html>
