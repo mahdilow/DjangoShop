@@ -6,7 +6,10 @@ from django.shortcuts import render, redirect
 
 from algoliasearch_django import raw_search
 from algoliasearch_django.decorators import register
+from django.contrib import messages
 
+from django.shortcuts import render, redirect
+from authapp.auth_service import AuthService
 
 from product.models import Product, Category
 
@@ -41,13 +44,30 @@ def myaccount(request):
 def edit_myaccount(request):
     if request.method == 'POST':
         user = request.user
+        phone_number = request.POST.get('phone_number')
+        otp = request.POST.get('otp')
+
+        # Update basic information
         user.first_name = request.POST.get('first_name')
         user.last_name = request.POST.get('last_name')
         user.email = request.POST.get('email')
         user.username = request.POST.get('username')
-        user.save()
 
+        # If phone number and OTP are provided, verify them
+        if phone_number and otp:
+            auth_service = AuthService()
+            response, status = auth_service.verify_otp(phone_number, otp)
+            
+            if status == 200:
+                user.phone_number = phone_number
+                messages.success(request, 'شماره تلفن با موفقیت تایید شد')
+            else:
+                messages.error(request, response.get('error', 'خطا در تایید شماره تلفن'))
+                return render(request, 'core/edit_myaccount.html')
+
+        user.save()
         return redirect('myaccount')
+        
     return render(request, 'core/edit_myaccount.html')
 
 def shop(request):

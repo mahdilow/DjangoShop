@@ -52,6 +52,7 @@ CART_SESSION_ID = "cart"
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',
     "django.contrib.admin",
     "authapp.apps.AuthappConfig",
     "django.contrib.auth",
@@ -234,4 +235,46 @@ KAVENEGAR_API_KEY = os.getenv("KAVENEGAR_API_KEY")
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
+}
+
+
+JAZZMIN_SETTINGS = {
+    # General settings
+    "site_title": "PyroStyle",
+    "site_header": "PyroStyle Admin",
+    "site_brand": "PyroStyle",
+    
+    # Theme settings
+    "theme": "superhero",  # This sets the overall theme to superhero
+    "dark_mode_theme": "superhero",  # This ensures dark mode also uses superhero
+    
+    
+    # Navigation customization
+    "navigation_expanded": True,
+    
+    # Custom icons (optional)
+    "icons": {
+        "auth": "fas fa-users-cog",
+        "auth.user": "fas fa-user",
+        "auth.Group": "fas fa-users",
+    },
+}
+
+JAZZMIN_UI_TWEAKS = {
+    "navbar": "navbar-dark",
+    "sidebar": "sidebar-dark-primary",
+    "theme": "superhero",  # Matching theme here
+    "dark_mode_theme": "superhero",  # And here
+    "brand_colour": False,
+    "accent": "accent-primary",
+    "navbar_fixed": True,
+    "sidebar_fixed": True,
+    "button_classes": {
+        "primary": "btn-primary",
+        "secondary": "btn-secondary",
+        "info": "btn-info",
+        "warning": "btn-warning",
+        "danger": "btn-danger",
+        "success": "btn-success"
+    }
 }
