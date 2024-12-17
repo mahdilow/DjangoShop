@@ -76,9 +76,9 @@
                                    type="text" 
                                    class="w-full rounded-lg border border-gray-700 bg-gray-800 p-4 text-lg text-white shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all" 
                                    placeholder="شماره تلفن خود را وارد کنید"
-                                   hx-trigger="keyup changed delay:500ms"
-                                   hx-get="/validate-phone"
-                                   hx-target="#phone-validation">
+                                   maxlength="11"
+                                   pattern="^09\d{9}$"
+                                   title="شماره موبایل باید با 09 شروع شود و 11 رقم باشد">
                             <button type="button" 
                                     onclick="sendOTP()" 
                                     class="px-6 rounded-lg text-white bg-green-600 hover:bg-green-700 transition-all duration-200 flex items-center space-x-2 space-x-reverse disabled:opacity-50 disabled:cursor-not-allowed"
@@ -89,7 +89,6 @@
                                 <span>ارسال کد</span>
                             </button>
                         </div>
-                        <div id="phone-validation" class="mt-2 text-sm"></div>
                     {% endif %}
                 </div>
             </div>
@@ -104,7 +103,8 @@
                                    type="text" 
                                    maxlength="6"
                                    class="w-full rounded-lg border border-gray-700 bg-gray-800 p-4 text-lg text-white shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all text-center tracking-widest" 
-                                   placeholder="- - - - - -">
+                                   placeholder="- - - - - -"
+                                   oninput="handleOTPInput(this)">
                             <div class="text-gray-400 flex items-center" id="timer"></div>
                         </div>
                     </div>
@@ -142,6 +142,7 @@
 <script src="https://unpkg.com/htmx.org@1.9.6"></script>
 <script>
 let timerInterval;
+let currentPhoneNumber = '';
 
 function showToast(message, type = 'info') {
     const toast = document.createElement('div');
@@ -163,17 +164,73 @@ function showToast(message, type = 'info') {
     
     document.getElementById('toast-container').appendChild(toast);
     
-    // Animate in
     setTimeout(() => {
         toast.classList.remove('scale-95', 'opacity-0');
         toast.classList.add('scale-100', 'opacity-100');
     }, 10);
 
-    // Auto remove after 5 seconds
     setTimeout(() => {
         toast.classList.add('scale-95', 'opacity-0');
         setTimeout(() => toast.remove(), 300);
     }, 5000);
+}
+
+async function checkPhoneNumber(phoneNumber) {
+    try {
+        const response = await fetch('/auth/check-phone/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+            },
+            body: JSON.stringify({ phone_number: phoneNumber })
+        });
+        
+        const data = await response.json();
+        return !data.exists; // Return true if phone number is available
+    } catch (error) {
+        console.error('Error checking phone number:', error);
+        return false;
+    }
+}
+
+async function verifyOTP(otp) {
+    try {
+        const response = await fetch('/auth/verify-otp/', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+            },
+            body: JSON.stringify({ 
+                phone_number: currentPhoneNumber,
+                otp: otp 
+            })
+        });
+        
+        const data = await response.json();
+        
+        if (response.ok) {
+            showToast('شماره تلفن با موفقیت تایید شد', 'success');
+            // Refresh the page or update the UI as needed
+            location.reload();
+        } else {
+            showToast(data.error || 'کد تایید نامعتبر است', 'error');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+        showToast('خطا در تایید کد', 'error');
+    }
+}
+
+function handleOTPInput(input) {
+    // Only allow numbers
+    input.value = input.value.replace(/[^0-9]/g, '');
+    
+    // Auto verify when 6 digits are entered
+    if (input.value.length === 6) {
+        verifyOTP(input.value);
+    }
 }
 
 async function sendOTP() {
@@ -185,11 +242,26 @@ async function sendOTP() {
         return;
     }
 
+    // Validate phone number format
+    if (!/^09\d{9}$/.test(phoneNumber)) {
+        showToast('فرمت شماره موبایل نامعتبر است', 'error');
+        return;
+    }
+
     // Disable button and show loading state
     button.disabled = true;
     button.innerHTML = '<svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>';
 
     try {
+        // First check if phone number exists
+        const isAvailable = await checkPhoneNumber(phoneNumber);
+        
+        if (!isAvailable) {
+            showToast('این شماره تلفن قبلاً در سیستم ثبت شده است', 'error');
+            return;
+        }
+
+        // If phone number is available, proceed with sending OTP
         const response = await fetch('/auth/phone-login/', {
             method: 'POST',
             headers: {
@@ -202,13 +274,10 @@ async function sendOTP() {
         const data = await response.json();
         
         if (response.ok) {
-            if (data.is_new_user === false) {
-                showToast('این شماره تلفن قبلاً در سیستم ثبت شده است', 'error');
-            } else {
-                document.getElementById('otp-section').classList.remove('hidden');
-                showToast('کد تایید با موفقیت ارسال شد', 'success');
-                startTimer(120); // 2 minutes timer
-            }
+            currentPhoneNumber = phoneNumber; // Store the phone number for OTP verification
+            document.getElementById('otp-section').classList.remove('hidden');
+            showToast('کد تایید با موفقیت ارسال شد', 'success');
+            startTimer(120); // 2 minutes timer
         } else {
             showToast(data.error || 'خطا در ارسال کد تایید', 'error');
         }
