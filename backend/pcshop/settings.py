@@ -56,27 +56,43 @@ INSTALLED_APPS = [
     "django.contrib.admin",
     "authapp.apps.AuthappConfig",
     "django.contrib.auth",
+    "django.contrib.sites",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    #myapps
     "cart",
     "core",
     "order",
-    "product.apps.ProductConfig",
+    "api",
+    "product",
+    
+    #3rdparty
     "algoliasearch_django",
     "django_jalali",
     "django_jalali.db",
     "django.contrib.humanize",
     "storages",
     "django_browser_reload",
-    "api",
-    "rest_framework",
     "corsheaders",
+    'dj_rest_auth',
+    'dj_rest_auth.registration',
+    
+    #drf
+    "rest_framework",
     "drf_spectacular",
     "rest_framework_simplejwt",
+    'rest_framework.authtoken',
+    
+    #allauth
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
 ]
 
+# django.contrib.sites
+SITE_ID = 1
 
 ALGOLIA = {
     "APPLICATION_ID": os.getenv("ALGO_APPLICATION_ID"),
@@ -95,6 +111,8 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "django_browser_reload.middleware.BrowserReloadMiddleware",
     "django.middleware.locale.LocaleMiddleware",
+    "allauth.account.middleware.AccountMiddleware",
+    
 ]
 
 
@@ -222,9 +240,12 @@ STORAGES = {
 REST_FRAMEWORK = {
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
     
-    'DEFAULT_AUTHENTICATION_CLASSES': (
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-    )
+       # 'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
+    ],
 }
 
 AUTH_USER_MODEL = "authapp.User"
@@ -232,10 +253,38 @@ AUTH_USER_MODEL = "authapp.User"
 
 KAVENEGAR_API_KEY = os.getenv("KAVENEGAR_API_KEY")
 
+# djangorestframework-simplejwt
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
 }
+# dj-rest-auth
+REST_AUTH = {
+    "USE_JWT": True,
+    "JWT_AUTH_COOKIE": "_auth",  # Name of access token cookie
+    "JWT_AUTH_REFRESH_COOKIE": "_refresh", # Name of refresh token cookie
+    "JWT_AUTH_HTTPONLY": False,  # Makes sure refresh token is sent
+}
+
+#django-allauth
+ACCOUNT_AUTHENTICATION_METHOD = "email"  # Use Email / Password authentication
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = "mandatory" # email confirmation
+ACCOUNT_CONFIRM_EMAIL_ON_GET = True
+
+
+# Django SMTP
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER") 
+EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
+
+
+
+
 
 
 JAZZMIN_SETTINGS = {

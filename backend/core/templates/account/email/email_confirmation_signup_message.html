@@ -1,0 +1,77 @@
+{% load i18n %}
+<!DOCTYPE html>
+<html dir="rtl" lang="fa">
+<head>
+    <meta charset="UTF-8">
+    <title>تایید ایمیل پایروستایل</title>
+    <style>
+        body {
+            font-family: Tahoma, Arial, sans-serif;
+            line-height: 1.6;
+            direction: rtl;
+            text-align: right;
+            background-color: #f3f4f6;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .logo {
+            color: #3b82f6;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        .button {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #3b82f6;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 6px;
+            margin: 20px 0;
+        }
+        .footer {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #e5e7eb;
+            font-size: 14px;
+            color: #6b7280;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">پایروستایل</div>
+        </div>
+        
+        <p>سلام {{ user.username }}،</p>
+        
+        <p>به پایروستایل خوش آمدید!</p>
+        
+        <p>برای تکمیل ثبت‌نام و فعال‌سازی حساب کاربری خود، لطفا روی دکمه زیر کلیک کنید:</p>
+        
+        <div style="text-align: center;">
+            <a href="{{ activate_url }}" class="button">تایید ایمیل</a>
+        </div>
+        
+        <p>یا می‌توانید مستقیما از این لینک استفاده کنید:<br>
+        <a href="{{ activate_url }}">{{ activate_url }}</a></p>
+        
+        <div class="footer">
+            <p>اگر شما این درخواست را ارسال نکرده‌اید، لطفا این ایمیل را نادیده بگیرید.</p>
+            <p>با تشکر،<br>تیم پایروستایل</p>
+        </div>
+    </div>
+</body>
+</html>

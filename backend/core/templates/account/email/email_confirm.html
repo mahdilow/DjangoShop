@@ -1,0 +1,53 @@
+{% extends "core/base.html" %}
+
+{% block title %}تایید ایمیل{% endblock %}
+
+{% block content %}
+<div class="flex justify-center items-center min-h-screen bg-gray-800">
+    <div class="w-full max-w-md p-8 bg-gray-900 rounded-xl shadow-lg border border-gray-700">
+        {% if confirmation %}
+            <div class="text-center space-y-4">
+                <svg class="w-16 h-16 text-green-500 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                
+                <h1 class="text-2xl font-bold text-blue-400">تایید ایمیل</h1>
+                
+                <p class="text-gray-300">آیا مایل به تایید ایمیل {{ confirmation.email_address.email }} هستید؟</p>
+                
+                <form method="post" action="{% url 'account_confirm_email' confirmation.key %}">
+                    {% csrf_token %}
+                    <button type="submit" class="w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-colors">
+                        تایید ایمیل
+                    </button>
+                </form>
+            </div>
+        {% else %}
+            <div class="text-center space-y-4">
+                <svg class="w-16 h-16 text-red-500 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                
+                <h1 class="text-2xl font-bold text-red-400">خطا در تایید ایمیل</h1>
+                
+                <p class="text-gray-300">لینک تایید ایمیل نامعتبر یا منقضی شده است.</p>
+                
+                <a href="{% url 'account_email' %}" class="block w-full py-3 px-4 bg-gray-700 hover:bg-gray-600 text-white rounded-lg transition-colors">
+                    بازگشت به تنظیمات ایمیل
+                </a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %} 
+
+
+
+
+
+
+
+
+
+
+erro edit file page 
