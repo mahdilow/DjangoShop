@@ -1,11 +1,10 @@
 from django.urls import path, include, re_path
-from .views import ProductList, ResendEmailVerificationView
+from .views import ProductList, ResendEmailVerificationView, GoogleLogin,GoogleLoginCallback
 from allauth.account.views import ConfirmEmailView, EmailVerificationSentView
 
 urlpatterns = [
     path('products/', ProductList.as_view()),
     path('', include("dj_rest_auth.urls")),
-    
         # Email verification URLs
     path(
         "registration/account-email-verification-sent/",
@@ -24,5 +23,12 @@ urlpatterns = [
     ),
 
     path('registration/', include("dj_rest_auth.registration.urls")),
+    path('google/', GoogleLogin.as_view(), name='google_login'),
+        path(
+        "google/callback/",
+        GoogleLoginCallback.as_view(),
+        name="google_login_callback",
+    ),
+    
     
 ]

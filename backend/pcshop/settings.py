@@ -89,6 +89,7 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
 ]
 
 # django.contrib.sites
@@ -282,8 +283,32 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = os.getenv("EMAIL_HOST_USER") 
 EMAIL_HOST_PASSWORD = os.getenv("EMAIL_HOST_PASSWORD")
 
+GOOGLE_OAUTH_CALLBACK_URL=os.getenv('GOOGLE_OAUTH_CALLBACK_URL')
+GOOGLE_OAUTH_CLIENT_ID=os.getenv('GOOGLE_CLIENT_ID')
 
-
+# Authenticate if local account with this email address already exists
+SOCIALACCOUNT_EMAIL_AUTHENTICATION = True
+# Connect local account and social account if local account with that email address already exists
+SOCIALACCOUNT_EMAIL_AUTHENTICATION_AUTO_CONNECT = True
+SOCIALACCOUNT_PROVIDERS = {
+   'google': {
+       'APP': {
+           'client_id': os.getenv('GOOGLE_CLIENT_ID'),
+           'secret': os.getenv('GOOGLE_CLIENT_SECRET'),
+           'key': ''
+       },
+       'SCOPE': [
+           'profile',
+           'email',
+       ],
+       'AUTH_PARAMS': {
+           'access_type': 'online',
+       }
+   }
+}
+ACCOUNT_ADAPTER = 'allauth.account.adapter.DefaultAccountAdapter'
+SOCIALACCOUNT_ADAPTER = 'allauth.socialaccount.adapter.DefaultSocialAccountAdapter'
+SOCIALACCOUNT_AUTO_SIGNUP = True
 
 
 

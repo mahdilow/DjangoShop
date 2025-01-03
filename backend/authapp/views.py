@@ -5,6 +5,7 @@ from .auth_service import AuthService, User
 from rest_framework.decorators import api_view
 import logging
 
+
 logger = logging.getLogger(__name__)
 
 class PhoneLoginView(APIView):
@@ -31,3 +32,4 @@ def check_phone(request):
     except Exception as e:
         logger.error(f"Error in check phone: {str(e)}")
         return Response({'error': str(e)}, status=500)    
+

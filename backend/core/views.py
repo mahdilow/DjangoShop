@@ -3,7 +3,7 @@ from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from django.shortcuts import render, redirect
-
+from pcshop import settings
 from algoliasearch_django import raw_search
 from algoliasearch_django.decorators import register
 from django.contrib import messages
@@ -21,6 +21,12 @@ def HomePage(request):
 
     return render(request, 'core/HomePage.html', {'products': products, 'categories': categories})
 
+def login(request):  # Create a new login view
+    return render(request, 'core/login.html', {
+        'google_callback_uri': settings.GOOGLE_OAUTH_CALLBACK_URL,
+        'google_client_id': settings.GOOGLE_OAUTH_CLIENT_ID,
+    })
+    
 def signup(request):
     if request.method == 'POST':
         form = SignUpForm(request.POST)

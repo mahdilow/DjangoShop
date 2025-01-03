@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>OAuth Test</title>
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+   <style>
+       .container {
+           max-width: 600px;
+           margin-top: 50px;
+       }
+       #userInfo {
+           margin-top: 20px;
+           display: none;
+       }
+       .user-card {
+           margin-top: 20px;
+           padding: 20px;
+           border: 1px solid #ddd;
+           border-radius: 8px;
+       }
+   </style>
+</head>
+<body>
+   <div class="container">
+       <h2 class="mb-4">OAuth2 Test</h2>
+       
+       <!-- Login Section -->
+       <div id="loginSection">
+           <button id="googleLogin" class="btn btn-primary">
+               Login with Google
+           </button>
+       </div>
+        <!-- User Info Section -->
+       <div id="userInfo" class="user-card">
+           <h3>User Information</h3>
+           <div id="userDetails"></div>
+           <button id="logout" class="btn btn-danger mt-3">Logout</button>
+       </div>
+   </div>
+    <script>
+       const API_URL = 'http://localhost:8000';  // Your Django backend URL
+        // DOM Elements
+       const googleLoginBtn = document.getElementById('googleLogin');
+       const logoutBtn = document.getElementById('logout');
+       const loginSection = document.getElementById('loginSection');
+       const userInfoSection = document.getElementById('userInfo');
+       const userDetails = document.getElementById('userDetails');
+        // Event Listeners
+       googleLoginBtn.addEventListener('click', initiateGoogleLogin);
+       logoutBtn.addEventListener('click', logout);
+        // Check auth status on page load
+       checkAuthStatus();
+        function initiateGoogleLogin() {
+           window.location.href = `${API_URL}/api/v1/google/`;
+       }
+        function logout() {
+           localStorage.removeItem('token');
+           updateUI(false);
+       }
+        function checkAuthStatus() {
+           const token = localStorage.getItem('token');
+           if (token) {
+               // Verify token and get user info
+               fetch(`${API_URL}/api/user/`, {
+                   headers: {
+                       'Authorization': `Bearer ${token}`
+                   }
+               })
+               .then(response => {
+                   if (response.ok) {
+                       return response.json();
+                   }
+                   throw new Error('Invalid token');
+               })
+               .then(user => {
+                   updateUI(true, user);
+               })
+               .catch(error => {
+                   console.error('Auth Error:', error);
+                   localStorage.removeItem('token');
+                   updateUI(false);
+               });
+           } else {
+               updateUI(false);
+           }
+       }
+        function updateUI(isLoggedIn, user = null) {
+           if (isLoggedIn && user) {
+               loginSection.style.display = 'none';
+               userInfoSection.style.display = 'block';
+               userDetails.innerHTML = `
+                   <p><strong>Email:</strong> ${user.email}</p>
+                   <p><strong>Username:</strong> ${user.username}</p>
+               `;
+           } else {
+               loginSection.style.display = 'block';
+               userInfoSection.style.display = 'none';
+               userDetails.innerHTML = '';
+           }
+       }
+        // Handle OAuth callback
+       const urlParams = new URLSearchParams(window.location.search);
+       const token = urlParams.get('token');
+       if (token) {
+           localStorage.setItem('token', token);
+           window.history.replaceState({}, document.title, '/');
+           checkAuthStatus();
+       }
+   </script>
+</body>
+</html>
